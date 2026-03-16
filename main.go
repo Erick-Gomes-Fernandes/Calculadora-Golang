@@ -1,62 +1,40 @@
 package main
 
-import "fmt"
-
-var resultado, numero int
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
 
 func main() {
-	var opcao int
 
-	for {
-		fmt.Println("Número atual:", resultado)
-		fmt.Println("Escolha um número:")
-		_, err := fmt.Scanln(&numero)
-		if err != nil {
-			fmt.Println("Entrada inválida! Digite apenas números inteiros.")
-			continue
-		}
+	fmt.Println("Entre com a operação completa nesse formato -> 2*2")
+	var input string
+	fmt.Scan(&input)
 
-		fmt.Println("Escolha uma operação pelo indíce:")
-		fmt.Println("1 => Soma")
-		fmt.Println("2 => Subtração")
-		fmt.Println("3 => Multiplicação")
-		fmt.Println("4 => Divisão")
-		fmt.Println("0 => Encerrar programa")
-		fmt.Scanln(&opcao)
+	operacao := strings.Split(input, "")
+	fmt.Println(operacao)
 
-		switch opcao {
-		case 1:
-			resultado = soma(numero)
-		case 2:
-			resultado = subtrai(numero)
-		case 3:
-			resultado = multiplica(numero)
-		case 4:
-			resultado = divide(numero)
-		case 0:
-			fmt.Println("Resultado:", resultado)
-			return
-		default:
-			fmt.Println("Opção inválida")
-		}
+	resultado := getResult(operacao)
+	fmt.Println("Resultado de", operacao[0], operacao[1], operacao[2], "=", resultado)
+}
+
+func getResult(operacao []string) int {
+	num1, _ := strconv.Atoi(operacao[0])
+	num2, _ := strconv.Atoi(operacao[2])
+
+	switch operacao[1] {
+	case "+":
+		return num1 + num2
+	case "-":
+		return num1 - num2
+	case "*":
+		return num1 * num2
+	case "/":
+		return num1 / num2
+	default:
+		panic("Operador não válido. (Operadores válidos -> | + | - | * | / |)")
 	}
 }
 
-func soma(x int) int {
-	return (resultado + x)
-}
-
-func subtrai(x int) int {
-	return (resultado - x)
-}
-
-func multiplica(x int) int {
-	return (resultado * x)
-}
-
-func divide(x int) int {
-	return (resultado / x)
-}
-
 // Operações Soma (+), Subtração (-), Multiplicação (*), Divisão (/)
-// Rodar enquanto quiser rodar, dar opção de finalizar o programa ao usuário
